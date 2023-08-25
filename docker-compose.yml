@@ -1,0 +1,35 @@
+version: "3.3"
+services:
+  grafana:
+    ports:
+      - 3000:3000
+    container_name: grafana
+    network_mode: prometheus-net
+    volumes:
+      - grafana-storage:/var/lib/grafana
+    image: grafana/grafana
+  prometheus:
+    ports:
+      - 9090:9090
+    container_name: prometheus
+    network_mode: prometheus-net
+    volumes:
+      - prometheus-data:/prometheus
+      - /home/stefan/Documents/Work/docker_prom/prometheus.yml:/etc/prometheus/prometheus.yml
+    image: prom/prometheus
+  monika:
+    ports:
+      - 3001:3001
+    container_name: monika
+    network_mode: prometheus-net
+    volumes:
+      - config:/config
+    image: hyperjump/monika
+
+networks:
+  prometheus-net:
+
+volumes:
+  grafana-storage:
+  prometheus-data:
+  config:

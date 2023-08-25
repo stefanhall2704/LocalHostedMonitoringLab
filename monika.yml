@@ -1,0 +1,28 @@
+notifications:
+  - id: a604624c-d45e-4054-99f0-23432508d917
+    type: desktop
+probes:
+  - id: c675e6b5-ce7f-4da4-b6e8-7e8d6286d731
+    name: Github
+    description: ""
+    interval: 10
+    requests:
+      - url: https://github.com
+        body: {}
+        timeout: 10000
+        headers: {}
+        method: GET
+      - url: https://github.com/hyperjump
+        body: {}
+        timeout: 10000
+        headers: {}
+        method: GET
+    incidentThreshold: 5
+    recoveryThreshold: 5
+    alerts:
+      - assertion: response.status < 200 or response.status > 299
+        message: Target is not healthy. It has not been returning status code 2xx.
+      - assertion: response.time > 2000
+        message: >-
+          Target is not healthy. The response time has been greater than 2000
+          ms.
